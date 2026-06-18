@@ -13,6 +13,9 @@ Minecraft Java 版 PBR 材质包（资源包），面向 Iris Shaders 优化。
 
 ## 关键文件
 - `pack.mcmeta` — 资源包元数据
+- `scripts/create_all_textures.py` — 全方块 3D 纹理生成器 (216种)
 - `scripts/generate_pbr.py` — PBR 贴图批量生成
+- 最终方案: 从原版 jar 提取 1111 个纹理，仅生成 _n + _s PBR 层，纹理外观保持原版
+- 已生成 1111×3=3333 个 PBR 贴图文件
 - `docs/PBR_GUIDE.md` — 格式规范文档
 - `assets/minecraft/textures/block/` — 贴图存放

@@ -29,34 +29,131 @@ from scipy import ndimage
 # ============================================================
 
 MATERIAL_PRESETS: dict[str, dict[str, int]] = {
-    "stone":       {"smoothness": 40,  "metalness": 0,   "emission": 0},
-    "cobblestone": {"smoothness": 35,  "metalness": 0,   "emission": 0},
-    "dirt":        {"smoothness": 15,  "metalness": 0,   "emission": 0},
-    "grass":       {"smoothness": 20,  "metalness": 0,   "emission": 0},
-    "sand":        {"smoothness": 25,  "metalness": 0,   "emission": 0},
-    "gravel":      {"smoothness": 30,  "metalness": 0,   "emission": 0},
-    "wood":        {"smoothness": 60,  "metalness": 0,   "emission": 0},
-    "planks":      {"smoothness": 50,  "metalness": 0,   "emission": 0},
-    "glass":       {"smoothness": 255, "metalness": 0,   "emission": 0},
-    "water":       {"smoothness": 255, "metalness": 0,   "emission": 0},
-    "ice":         {"smoothness": 220, "metalness": 0,   "emission": 0},
-    "iron":        {"smoothness": 160, "metalness": 255, "emission": 0},
-    "gold":        {"smoothness": 200, "metalness": 255, "emission": 0},
-    "copper":      {"smoothness": 140, "metalness": 255, "emission": 0},
-    "diamond":     {"smoothness": 230, "metalness": 200, "emission": 0},
-    "emerald":     {"smoothness": 210, "metalness": 180, "emission": 0},
-    "netherite":   {"smoothness": 180, "metalness": 255, "emission": 0},
-    "glowstone":   {"smoothness": 60,  "metalness": 0,   "emission": 255},
-    "shroomlight": {"smoothness": 50,  "metalness": 0,   "emission": 255},
-    "sealantern":  {"smoothness": 100, "metalness": 0,   "emission": 255},
-    "redstone":    {"smoothness": 30,  "metalness": 0,   "emission": 128},
-    "lapis":       {"smoothness": 100, "metalness": 80,  "emission": 0},
-    "obsidian":    {"smoothness": 120, "metalness": 0,   "emission": 0},
-    "clay":        {"smoothness": 30,  "metalness": 0,   "emission": 0},
-    "wool":        {"smoothness": 5,   "metalness": 0,   "emission": 0},
-    "concrete":    {"smoothness": 20,  "metalness": 0,   "emission": 0},
-    "brick":       {"smoothness": 45,  "metalness": 0,   "emission": 0},
-    "terracotta":  {"smoothness": 40,  "metalness": 0,   "emission": 0},
+    # 天然石类
+    "stone":        {"smoothness": 40,  "metalness": 0,   "emission": 0},
+    "cobblestone":  {"smoothness": 35,  "metalness": 0,   "emission": 0},
+    "andesite":     {"smoothness": 35,  "metalness": 0,   "emission": 0},
+    "diorite":      {"smoothness": 30,  "metalness": 0,   "emission": 0},
+    "granite":      {"smoothness": 30,  "metalness": 0,   "emission": 0},
+    "deepslate":    {"smoothness": 50,  "metalness": 0,   "emission": 0},
+    "tuff":         {"smoothness": 25,  "metalness": 0,   "emission": 0},
+    "calcite":      {"smoothness": 45,  "metalness": 0,   "emission": 0},
+    "dripstone":    {"smoothness": 30,  "metalness": 0,   "emission": 0},
+    "bedrock":      {"smoothness": 100, "metalness": 0,   "emission": 0},
+    "sandstone":    {"smoothness": 20,  "metalness": 0,   "emission": 0},
+    "red_sandstone": {"smoothness": 20, "metalness": 0,   "emission": 0},
+    "basalt":       {"smoothness": 80,  "metalness": 0,   "emission": 0},
+    "blackstone":   {"smoothness": 45,  "metalness": 0,   "emission": 0},
+    "end_stone":    {"smoothness": 25,  "metalness": 0,   "emission": 0},
+    "purpur":       {"smoothness": 50,  "metalness": 0,   "emission": 0},
+    "quartz":       {"smoothness": 60,  "metalness": 0,   "emission": 0},
+    "netherrack":   {"smoothness": 20,  "metalness": 0,   "emission": 0},
+    "nylium":       {"smoothness": 18,  "metalness": 0,   "emission": 0},
+    
+    # 泥土/草地类
+    "dirt":         {"smoothness": 15,  "metalness": 0,   "emission": 0},
+    "mud":          {"smoothness": 10,  "metalness": 0,   "emission": 0},
+    "podzol":       {"smoothness": 15,  "metalness": 0,   "emission": 0},
+    "mycelium":     {"smoothness": 15,  "metalness": 0,   "emission": 0},
+    "grass":        {"smoothness": 20,  "metalness": 0,   "emission": 0},
+    "farmland":     {"smoothness": 10,  "metalness": 0,   "emission": 0},
+    "dirt_path":    {"smoothness": 12,  "metalness": 0,   "emission": 0},
+    
+    # 沙砾类
+    "sand":         {"smoothness": 25,  "metalness": 0,   "emission": 0},
+    "gravel":       {"smoothness": 30,  "metalness": 0,   "emission": 0},
+    "soul_sand":    {"smoothness": 10,  "metalness": 0,   "emission": 0},
+    "soul_soil":    {"smoothness": 12,  "metalness": 0,   "emission": 0},
+    "clay":         {"smoothness": 30,  "metalness": 0,   "emission": 0},
+    "suspicious":   {"smoothness": 25,  "metalness": 0,   "emission": 0},
+    
+    # 木材类
+    "planks":       {"smoothness": 50,  "metalness": 0,   "emission": 0},
+    "wood":         {"smoothness": 60,  "metalness": 0,   "emission": 0},
+    "log":          {"smoothness": 55,  "metalness": 0,   "emission": 0},
+    "stem":         {"smoothness": 55,  "metalness": 0,   "emission": 0},
+    "hyphae":       {"smoothness": 50,  "metalness": 0,   "emission": 0},
+    "stripped":     {"smoothness": 45,  "metalness": 0,   "emission": 0},
+    "bamboo":       {"smoothness": 55,  "metalness": 0,   "emission": 0},
+    
+    # 砖类
+    "brick":        {"smoothness": 45,  "metalness": 0,   "emission": 0},
+    "nether_brick": {"smoothness": 40,  "metalness": 0,   "emission": 0},
+    
+    # 混凝土/陶瓦
+    "concrete":     {"smoothness": 20,  "metalness": 0,   "emission": 0},
+    "terracotta":   {"smoothness": 40,  "metalness": 0,   "emission": 0},
+    "glazed":       {"smoothness": 120, "metalness": 0,   "emission": 0},
+    
+    # 羊毛/地毯
+    "wool":         {"smoothness": 5,   "metalness": 0,   "emission": 0},
+    "carpet":       {"smoothness": 5,   "metalness": 0,   "emission": 0},
+    
+    # 金属类
+    "iron":         {"smoothness": 160, "metalness": 255, "emission": 0},
+    "gold":         {"smoothness": 200, "metalness": 255, "emission": 0},
+    "copper":       {"smoothness": 140, "metalness": 255, "emission": 0},
+    "diamond":      {"smoothness": 230, "metalness": 200, "emission": 0},
+    "emerald":      {"smoothness": 210, "metalness": 180, "emission": 0},
+    "netherite":    {"smoothness": 180, "metalness": 255, "emission": 0},
+    "lapis":        {"smoothness": 100, "metalness": 80,  "emission": 0},
+    "redstone":     {"smoothness": 30,  "metalness": 0,   "emission": 128},
+    "coal":         {"smoothness": 40,  "metalness": 50,  "emission": 0},
+    
+    # 矿石类
+    "ore":          {"smoothness": 45,  "metalness": 100, "emission": 0},
+    "debris":       {"smoothness": 150, "metalness": 255, "emission": 0},
+    
+    # 玻璃/透明类
+    "glass":        {"smoothness": 255, "metalness": 0,   "emission": 0},
+    "ice":          {"smoothness": 220, "metalness": 0,   "emission": 0},
+    "water":        {"smoothness": 255, "metalness": 0,   "emission": 0},
+    
+    # 发光类
+    "glowstone":    {"smoothness": 60,  "metalness": 0,   "emission": 255},
+    "shroomlight":  {"smoothness": 50,  "metalness": 0,   "emission": 255},
+    "sea_lantern":  {"smoothness": 100, "metalness": 0,   "emission": 255},
+    "lantern":      {"smoothness": 180, "metalness": 200, "emission": 200},
+    "magma":        {"smoothness": 40,  "metalness": 0,   "emission": 180},
+    "lamp":         {"smoothness": 30,  "metalness": 0,   "emission": 128},
+    "candle":       {"smoothness": 60,  "metalness": 0,   "emission": 200},
+    "campfire":     {"smoothness": 60,  "metalness": 0,   "emission": 150},
+    "fire":         {"smoothness": 255, "metalness": 0,   "emission": 255},
+    "lava":         {"smoothness": 100, "metalness": 0,   "emission": 255},
+    "beacon":       {"smoothness": 230, "metalness": 200, "emission": 200},
+    "amethyst":     {"smoothness": 200, "metalness": 0,   "emission": 80},
+    
+    # 特殊类
+    "obsidian":     {"smoothness": 120, "metalness": 0,   "emission": 0},
+    "prismarine":   {"smoothness": 60,  "metalness": 0,   "emission": 20},
+    "coral":        {"smoothness": 30,  "metalness": 0,   "emission": 0},
+    "moss":         {"smoothness": 10,  "metalness": 0,   "emission": 0},
+    "honey":        {"smoothness": 200, "metalness": 0,   "emission": 20},
+    "slime":        {"smoothness": 200, "metalness": 0,   "emission": 0},
+    "snow":         {"smoothness": 15,  "metalness": 0,   "emission": 0},
+    "nether_wart":  {"smoothness": 30,  "metalness": 0,   "emission": 0},
+    "wart":         {"smoothness": 30,  "metalness": 0,   "emission": 0},
+    "shroom":       {"smoothness": 20,  "metalness": 0,   "emission": 0},
+    "fungus":       {"smoothness": 20,  "metalness": 0,   "emission": 0},
+    "target":       {"smoothness": 30,  "metalness": 0,   "emission": 0},
+    "sculk":        {"smoothness": 5,   "metalness": 0,   "emission": 40},
+    "respawn_anchor": {"smoothness": 100,"metalness": 0,   "emission": 150},
+    "sponge":       {"smoothness": 5,   "metalness": 0,   "emission": 0},
+    "tnt":          {"smoothness": 30,  "metalness": 0,   "emission": 0},
+    "barrel":       {"smoothness": 50,  "metalness": 0,   "emission": 0},
+    "bookshelf":    {"smoothness": 45,  "metalness": 0,   "emission": 0},
+    "crafting":     {"smoothness": 50,  "metalness": 0,   "emission": 0},
+    "furnace":      {"smoothness": 40,  "metalness": 50,  "emission": 0},
+    "dispenser":    {"smoothness": 40,  "metalness": 50,  "emission": 0},
+    "dropper":      {"smoothness": 40,  "metalness": 50,  "emission": 0},
+    "observer":     {"smoothness": 40,  "metalness": 50,  "emission": 0},
+    "piston":       {"smoothness": 50,  "metalness": 80,  "emission": 0},
+    "hopper":       {"smoothness": 120, "metalness": 200, "emission": 0},
+    "rail":         {"smoothness": 150, "metalness": 255, "emission": 0},
+    "anvil":        {"smoothness": 130, "metalness": 255, "emission": 0},
+    "chain":        {"smoothness": 150, "metalness": 255, "emission": 0},
+    "cauldron":     {"smoothness": 140, "metalness": 255, "emission": 0},
+    "bell":         {"smoothness": 200, "metalness": 255, "emission": 0},
 }
 
 # ============================================================
@@ -76,51 +173,75 @@ def rgb_to_luminance(rgb: np.ndarray) -> np.ndarray:
 
 def generate_normal_map(
     image: Image.Image,
-    strength: float = 5.0,
-    blur: float = 0.5,
+    strength: float = 3.0,
+    blur: float = 0.6,
 ) -> Image.Image:
     """
     从基础颜色贴图生成切线空间法线贴图（OpenGL 格式，Y+）。
     
-    步骤:
-    1. 转换为灰度图（亮度）
-    2. 轻微模糊去噪
-    3. Sobel 算子计算梯度
-    4. 构建法线向量并归一化
-    5. 映射到 [0, 255] RGB 空间
+    改进算法:
+    1. 转为灰度图，强模糊去掉高频颜色噪点
+    2. 边缘检测找结构性凹凸（砖缝、木纹、石缝）
+    3. 低频分量做柔和地形
+    4. 组合为高度图，再 Sobel 计算法线
     """
-    # 转灰度 + 模糊
-    gray = image.convert("L")
+    # 转灰度
+    gray = np.array(image.convert("L"), dtype=np.float32) / 255.0
+    
+    # 多层模糊：强模糊→低频大形状，保留高频做细节
     if blur > 0:
-        gray = gray.filter(ImageFilter.GaussianBlur(radius=blur))
-    gray_arr = np.array(gray, dtype=np.float32) / 255.0
-
+        gray_pil = Image.fromarray((gray * 255).astype(np.uint8))
+        
+        # 低频分量: 强模糊，代表大块形状
+        low_freq = np.array(
+            gray_pil.filter(ImageFilter.GaussianBlur(radius=blur * 3)),
+            dtype=np.float32
+        ) / 255.0
+        
+        # 中频分量: 中等模糊，保留纹理结构
+        mid_freq = np.array(
+            gray_pil.filter(ImageFilter.GaussianBlur(radius=blur)),
+            dtype=np.float32
+        ) / 255.0
+        
+        # 高频分量 = 原始灰度 - 中频（细节/噪点，大幅压缩）
+        high_freq = gray - mid_freq
+        high_freq = np.clip(high_freq, -0.15, 0.15) * 0.3  # 压制高频
+        
+        # 高度图 = 低频为主 + 少量高频细节
+        height = low_freq * 0.7 + mid_freq * 0.2 + high_freq * 0.1
+    else:
+        height = gray
+    
     # Sobel 梯度
-    gx = ndimage.sobel(gray_arr, axis=1) * strength
-    gy = ndimage.sobel(gray_arr, axis=0) * strength
-
-    # 法线向量 (切线空间)
+    gx = ndimage.sobel(height, axis=1) * strength
+    gy = ndimage.sobel(height, axis=0) * strength
+    
+    # 限制最大梯度（防止法线过度倾斜）
+    gx = np.clip(gx, -3.0, 3.0)
+    gy = np.clip(gy, -3.0, 3.0)
+    
+    # 法线向量 (切线空间, OpenGL: Y+)
     nx = -gx
-    ny = -gy  # OpenGL: Y+
-    nz = np.ones_like(gray_arr)
-
+    ny = -gy
+    nz = np.ones_like(height)
+    
     # 归一化
     length = np.sqrt(nx ** 2 + ny ** 2 + nz ** 2)
     length = np.maximum(length, 1e-8)
     nx /= length
     ny /= length
     nz /= length
-
-    # 映射到 [0, 1]
+    
+    # 映射到 [0, 255]
     nx = nx * 0.5 + 0.5
     ny = ny * 0.5 + 0.5
     nz = nz * 0.5 + 0.5
-
-    # 组合为 RGB
+    
     normal = np.stack([nx, ny, nz], axis=2)
     normal = np.clip(normal * 255, 0, 255).astype(np.uint8)
-
-    return Image.fromarray(normal, "RGB")
+    
+    return Image.fromarray(normal.astype(np.uint8))
 
 
 # ============================================================
@@ -147,20 +268,21 @@ def generate_specular_map(
     # 根据亮度在材质预设附近做微调，增加真实感
     luminance = gray / 255.0
 
-    # R: Smoothness — 亮区更光滑，暗区更粗糙
+    # Complementary 使用 G 通道做主光滑度!
     base_s = material["smoothness"]
     smoothness = base_s + (luminance - 0.5) * variation * 2
     smoothness = np.clip(smoothness, 0, 255)
 
-    # G: Metalness — 金属材质按亮度微调
+    # R: 辅助金属度（Complementary 也用 R 做部分材质的 emission/smoothness）
     base_m = material["metalness"]
     if base_m > 0:
         metalness = base_m + (luminance - 0.5) * variation
         metalness = np.clip(metalness, 0, 255)
     else:
-        metalness = np.full_like(smoothness, 0, dtype=np.float32)
+        # 非金属: R 也放光滑度（双通道兼容）
+        metalness = smoothness.copy()
 
-    # B: Emission — 发光材质按亮度微调
+    # B: Emission（自发光）
     base_e = material["emission"]
     if base_e > 0:
         emission = base_e + (luminance - 0.5) * 255
@@ -171,10 +293,11 @@ def generate_specular_map(
     # A: 255
     alpha = np.full_like(smoothness, 255, dtype=np.float32)
 
-    specular = np.stack([smoothness, metalness, emission, alpha], axis=2)
+    # 注意通道顺序: R, G=smoothness, B, A
+    specular = np.stack([metalness, smoothness, emission, alpha], axis=2)
     specular = np.clip(specular, 0, 255).astype(np.uint8)
 
-    return Image.fromarray(specular, "RGBA")
+    return Image.fromarray(specular)
 
 
 # ============================================================
@@ -182,13 +305,43 @@ def generate_specular_map(
 # ============================================================
 
 
+# 检测优先级: 具体关键词 > 通用关键词
+DETECT_ORDER = [
+    "respawn_anchor", "sea_lantern", "soul_sand", "soul_soil", "red_sandstone",
+    "nether_brick", "dirt_path", "end_stone", "shroomlight",
+    "glowstone", "magma", "candle", "campfire", "lantern", "beacon", "amethyst",
+    "debris", "netherite", "diamond", "emerald", "gold", "iron", "copper", "coal",
+    "lapis", "redstone", "quartz",
+    "cobblestone", "sandstone", "blackstone", "deepslate", "andesite", "diorite",
+    "granite", "dripstone", "calcite", "basalt", "tuff", "bedrock",
+    "obsidian", "prismarine", "purpur",
+    "ore", "log", "stem", "hyphae", "planks", "bamboo", "stripped",
+    "coral", "slime", "honey", "snow", "ice", "glass",
+    "wool", "carpet",
+    "concrete", "terracotta", "glazed",
+    "brick", "mud", "clay",
+    "dirt", "podzol", "mycelium", "grass", "farmland",
+    "sand", "gravel", "suspicious",
+    "netherrack", "nylium", "wart", "fungus", "shroom",
+    "moss", "sculk", "sponge",
+    "lava", "fire", "lamp",
+    "barrel", "bookshelf", "crafting", "furnace", "dispenser", "dropper",
+    "observer", "piston", "hopper", "rail", "anvil", "chain", "cauldron",
+    "bell", "tnt", "target",
+    "stone",
+]
+
 def detect_material(filename: str) -> str | None:
     """根据文件名自动推断材质类型。"""
     name = Path(filename).stem.lower()
-    for key in sorted(MATERIAL_PRESETS.keys(), key=len, reverse=True):
+    for key in DETECT_ORDER:
         if key in name:
-            return key
-    return None
+            if key in MATERIAL_PRESETS:
+                return key
+            # 映射别名
+            if key == "nether_brick":
+                return "brick"
+    return "stone"
 
 
 def process_image(
@@ -247,6 +400,7 @@ def main():
     parser.add_argument("-b", "--normal-blur", type=float, default=0.5, help="法线预模糊半径 (默认: 0.5)")
     parser.add_argument("-v", "--variation", type=float, default=15.0, help="光滑度亮度变化幅度 (默认: 15.0)")
     parser.add_argument("--overwrite", action="store_true", help="覆盖已有贴图")
+    parser.add_argument("--verbose", action="store_true", help="显示详细处理日志")
     parser.add_argument("--list-materials", action="store_true", help="列出所有可用材质预设并退出")
 
     args = parser.parse_args()
@@ -293,17 +447,13 @@ def main():
 
     # 逐一处理
     failed = 0
-    for img_path in image_files:
+    for idx, img_path in enumerate(image_files):
         # 确定材质预设
         material_name = args.material or detect_material(img_path.name)
-        if material_name and material_name not in MATERIAL_PRESETS:
-            print(f"⚠ 未知材质 '{material_name}'，使用 stone 预设")
-            material_name = "stone"
-        if not material_name:
+        if material_name not in MATERIAL_PRESETS:
             material_name = "stone"
 
         material = MATERIAL_PRESETS[material_name]
-        print(f"[{material_name:12}] {img_path.name}  ", end="")
 
         try:
             results = process_image(
@@ -315,10 +465,13 @@ def main():
                 args.variation,
                 args.overwrite,
             )
-            print(f"→ {'  '.join(results)}")
         except Exception as e:
-            print(f"✗ 处理失败: {e}")
+            if args.verbose:
+                print(f"  ✗ {img_path.name}: {e}")
             failed += 1
+        
+        if args.verbose or (idx + 1) % 100 == 0:
+            print(f"  进度: {idx + 1}/{len(image_files)}  ({material_name})")
 
     print(f"\n{'='*50}")
     print(f"  完成! 成功: {len(image_files) - failed} 组, 失败: {failed}")
