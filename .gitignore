@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+*.egg
+.venv/
+venv/
+env/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Generated PBR output (optional - uncomment to ignore generated textures)
+# assets/minecraft/textures/block/*_n.png
+# assets/minecraft/textures/block/*_s.png
+
+# Temp files
+*.tmp
+*.bak
