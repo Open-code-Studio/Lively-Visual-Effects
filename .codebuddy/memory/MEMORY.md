@@ -1,21 +1,23 @@
-# 项目: 灵动:视效 (Lively Visual Effects)
+# 项目记忆 - 灵动:视效 (Lively Visual Effects)
 
-## 项目类型
-Minecraft Java 版 PBR 材质包（资源包），面向 Iris Shaders 优化。
+## 项目概述
+Minecraft PBR材质包 + 专属光影系统，学习零雾老师的设计理念。
 
-## PBR 格式标准
-- **labPBR 1.3**
-- 法线贴图: OpenGL 格式（切线空间，Y+ 向上）
-- _s.png 通道: R=光滑度(Smoothness), G=金属度(Metalness), B=自发光(Emission)
+## 项目结构
+- `texture_pack/` - PBR材质包（双版本兼容）
+- `shader_pack/` - 专属光影（GLSL着色器）
+- `tools/generate_pbr.py` - PBR贴图自动生成器
 
-## 技术栈
-- Python 脚本工具: Pillow + numpy + scipy
+## 关键设计决策
+- **设计哲学**: 零雾老师风格——忠实原版画风，增强PBR质感而非魔改
+- **PBR标准**: LabPBR 1.3 (Java) + Bedrock RTX MER格式
+- **渲染管线**: Cook-Torrance BRDF + GGX NDF + Deferred Shading
+- **材质分类**: 30+种预设，分石质/木质/泥土/砖块/金属/玻璃/发光
+- **多分辨率**: 64x/128x/256x 三档
+- **兼容性**: Java(Iris/Optifine/Oculus) + Bedrock RTX
 
-## 关键文件
-- `pack.mcmeta` — 资源包元数据
-- `scripts/create_all_textures.py` — 全方块 3D 纹理生成器 (216种)
-- `scripts/generate_pbr.py` — PBR 贴图批量生成
-- 最终方案: 从原版 jar 提取 1111 个纹理，仅生成 _n + _s PBR 层，纹理外观保持原版
-- 已生成 1111×3=3333 个 PBR 贴图文件
-- `docs/PBR_GUIDE.md` — 格式规范文档
-- `assets/minecraft/textures/block/` — 贴图存放
+## 开发约定
+- GLSL版本: 150 compatibility
+- 着色器通道命名: gbuffers_*, composite*, shadow.*, final.*
+- PBR贴图命名: name.png / name_n.png / name_s.png / name_mer.png / name_heightmap.png
+- Python纹理生成使用 numpy + Pillow + scipy

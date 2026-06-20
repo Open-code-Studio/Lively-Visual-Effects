@@ -1,16 +1,32 @@
-# 灵动:视效 — PBR 材质包
+# 灵动:视效 - Lively Visual Effects
 
-> **Lively Visual Effects** — 为 Minecraft Java 版打造的 PBR（基于物理渲染）材质包，专为 **Iris Shaders** 优化。
+## 🎨 项目简介
+
+**灵动:视效** 是一套为 Minecraft 精心打造的 PBR（基于物理渲染）材质包及其专属光影系统。  
+
+设计理念:
+
+> *"在不魔改原版画风的前提下，给所有方块加上真实的质感"*
 
 ---
 
-## ✨ 特性
+## ✨ 核心特性
 
-- 🎨 **labPBR 1.3 标准** — 兼容主流光影（Iris / OptiFine）
-- 🧱 **法线贴图** (`_n`) — 增强表面细节与立体感
-- ✨ **反射/光滑度/金属度贴图** (`_s`) — 精确控制材质物理属性
-- 🔧 **自动生成脚本** — 从基础颜色贴图批量生成 PBR 贴图
-- 📦 **轻量化** — 按需安装，不臃肿
+### 材质包 (Texture Pack)
+- **原版风格 PBR** — 忠实于 Minecraft 原版视觉，仅增强材质质感
+- **完整 PBR 贴图** — Normal Map（法线）、MER Map（金属/发光/粗糙）、Height Map（高度）、Specular Map（反射）
+- **多分辨率支持** — 64x / 128x / 256x 三档可选
+- **双版本兼容** — 支持 Java 版（Iris/Optifine/Oculus）和基岩版 RTX
+- **智能材质分类** — 自动识别石质、木质、金属、泥土、发光等材质类型
+
+### 专属光影 (Shader Pack)
+- **完整 PBR 渲染管线** — Cook-Torrance BRDF + GGX 分布
+- **体积光 (Volumetric Light)** — 真实的大气散射和丁达尔效应
+- **屏幕空间反射 (SSR)** — 金属、水面等光滑表面的实时反射
+- **环境光遮蔽 (SSAO)** — 增强场景深度感
+- **柔阴影 (PCF Shadow)** — 5x5 百分比渐近滤波软阴影
+- **泛光效果 (Bloom)** — ACES 色调映射 + 色彩分级
+- **动态水面** — 带波浪法线、菲涅尔反射、焦散模拟的水渲染
 
 ---
 
@@ -18,104 +34,130 @@
 
 ```
 Lively-Visual-Effects/
-├── pack.mcmeta          # 资源包元数据
-├── pack.png             # 资源包图标
-├── assets/
-│   └── minecraft/
-│       └── textures/
-│           └── block/   # PBR 贴图文件（*.png, *_n.png, *_s.png）
-├── scripts/
-│   ├── generate_pbr.py  # PBR 贴图批量生成工具
-│   └── requirements.txt # Python 依赖
-└── docs/
-    └── PBR_GUIDE.md     # PBR 格式详细指南
+├── texture_pack/              # PBR 材质包
+│   ├── manifest.json          # 基岩版清单
+│   ├── pack.mcmeta            # Java 版清单
+│   ├── pack_icon.png          # 材质包图标
+│   ├── textures/
+│   │   ├── texture_list.json  # PBR 贴图定义
+│   │   ├── terrain_texture.json
+│   │   └── blocks/            # PBR 贴图文件
+│   │       ├── stone.png      # 颜色贴图
+│   │       ├── stone_n.png    # 法线贴图
+│   │       ├── stone_mer.png  # 金属/发光/粗糙
+│   │       ├── stone_s.png    # 反射贴图 (LabPBR)
+│   │       └── ...
+│   └── subpacks/              # 分辨率变体
+│       ├── 64x/
+│       ├── 128x/
+│       └── 256x/
+├── shader_pack/               # 专属光影
+│   ├── shaders/
+│   │   ├── shaders.properties # 光影配置
+│   │   ├── gbuffers_terrain.* # 地形渲染
+│   │   ├── gbuffers_water.*   # 水面渲染
+│   │   ├── composite*.fsh     # 多通道合成
+│   │   ├── shadow.*           # 阴影映射
+│   │   ├── final.*            # 后处理输出
+│   │   └── lib/               # 着色器库
+│   │       ├── pbr.glsl       # PBR 材质系统
+│   │       ├── lighting.glsl  # 光照计算
+│   │       └── util.glsl      # 工具函数
+│   └── shader.properties
+├── tools/
+│   ├── generate_pbr.py        # PBR 贴图生成器
+│   └── requirements.txt
+└── README.md
 ```
 
 ---
 
 ## 🚀 快速开始
 
-### 1. 安装资源包
-
-将整个项目文件夹复制到 Minecraft 的 `resourcepacks` 目录：
-
-- **Windows**: `%APPDATA%\.minecraft\resourcepacks\`
-- **macOS**: `~/Library/Application Support/minecraft/resourcepacks/`
-- **Linux**: `~/.minecraft/resourcepacks/`
-
-然后在游戏设置中启用「灵动:视效」资源包。
-
-### 2. 生成 PBR 贴图（可选）
-
-如果你有自己的基础颜色贴图，可以使用脚本自动生成 PBR 贴图：
+### 1. 安装依赖
 
 ```bash
-cd scripts/
+cd tools
 pip install -r requirements.txt
-python generate_pbpython generate_pbr.py --input ../source/ --output ../assets/minecraft/textures/block/
 ```
 
----
+### 2. 生成 PBR 贴图
 
-## 🎨 PBR 贴图格式（labPBR 1.3）
+```bash
+# 生成示例贴图用于测试
+python generate_pbr.py --samples
 
-| 文件 | 后缀 | 说明 |
-|------|------|------|
-| 基础颜色 | `stone.png` | 标准漫反射/反照率贴图 |
-| 法线贴图 | `stone_n.png` | 切线空间法线（OpenGL 格式，Y+ 向上） |
-| 镜面反射 | `stone_s.png` | R=光滑度, G=金属度, B=自发光强度 |
+# 从你的原版贴图生成 PBR 版本
+python generate_pbr.py --input /path/to/vanilla/textures --output ../texture_pack
 
-### 通道详解 `_s.png`
+# 只生成材质包图标
+python generate_pbr.py --icon
+```
 
-| 通道 | 含义 | 值范围 | 说明 |
-|------|------|--------|------|
-| **R** | 光滑度 (Smoothness) | 0-255 | 0=完全粗糙, 255=镜面光滑 |
-| **G** | 金属度 (Metalness) | 0-255 | 0=非金属, 255=完全金属 |
-| **B** | 自发光 (Emission) | 0-255 | 0=不发光, 255=全亮 |
-| **A** | 次表面散射 (可选) | 0-255 | 仅透明/半透明材质使用 |
+### 3. 使用材质包
 
----
+**Java 版 (Iris/Optifine)**:
+1. 将 `texture_pack/` 文件夹复制到 `.minecraft/resourcepacks/`
+2. 在游戏设置中启用 "灵动:视效" 材质包
+3. 搭配 Iris 或 Optifine 使用光影
 
-## 📋 材质分类参考
+**基岩版 (Bedrock RTX)**:
+1. 将 `texture_pack/` 作为 `.mcpack` 导入
+2. 在全局资源中启用
+3. 需要支持 RTX 的设备
 
-| 材质类型 | 光滑度 (R) | 金属度 (G) | 自发光 (B) |
-|----------|-----------|-----------|-----------|
-| 石头 | 30-60 | 0 | 0 |
-| 泥土/草地 | 10-30 | 0 | 0 |
-| 木板 | 40-80 | 0 | 0 |
-| 铁块 | 120-180 | 255 | 0 |
-| 金块 | 180-220 | 255 | 0 |
-| 玻璃 | 200-255 | 0 | 0 |
-| 萤石 | 50-80 | 0 | 255 |
-| 水 | 255 | 0 | 0 |
+### 4. 使用专属光影
+
+**Java 版 (Iris)**:
+1. 将 `shader_pack/` 文件夹复制到 `.minecraft/shaderpacks/`
+2. 在 Iris 设置中选择 "灵动:视效"
+3. 确保材质包同步启用
 
 ---
 
-## 🔗 兼容的光影包
+## 🎯 PBR 材质标准
 
-- [Iris Shaders](https://irisshaders.dev/)（推荐）
-- [Complementary Reimagined](https://www.complementary.dev/reimagined/)
-- [BSL Shaders](https://bitslablab.com/bslshaders/)
-- [SEUS PTGI](https://www.sonicether.com/seus/)
-- 任何支持 labPBR 1.3 标准的光影包
+本材质包支持以下 PBR 贴图格式：
 
----
-
-## 📝 贡献
-
-欢迎提交 PR 改进贴图或脚本工具。请确保所有贴图为 16×16 像素（或更高倍数），PNG 格式。
+| 贴图 | 文件名 | 格式 | 说明 |
+|------|--------|------|------|
+| 颜色 | `name.png` | RGB(A) | 基础颜色/反照率 |
+| 法线 | `name_n.png` | RGB | 切线空间法线贴图 |
+| MER | `name_mer.png` | RGB | R=金属度 G=自发光 B=粗糙度 |
+| 反射 | `name_s.png` | RGBA | LabPBR 反射/光滑度 |
+| 高度 | `name_heightmap.png` | L | 视差贴图高度 |
 
 ---
 
-## 📄 许可证
+## 🎨 材质分类（零雾老师风格）
 
-本项目采用 [GNU General Public License v3.0](LICENSE) 开源协议。
+| 类别 | 粗糙度 | 金属度 | 高度强度 | 代表方块 |
+|------|--------|--------|----------|----------|
+| 石质 | 0.55-0.90 | 0.0 | 0.2-0.6 | stone, cobblestone, deepslate |
+| 木质 | 0.60-0.75 | 0.0 | 0.1-0.3 | planks, logs |
+| 泥土 | 0.85-0.95 | 0.0 | 0.1-0.3 | dirt, sand, gravel |
+| 砖块 | 0.55-0.60 | 0.0 | 0.2 | bricks, nether_bricks |
+| 金属 | 0.10-0.25 | 0.7-1.0 | 0.03-0.05 | iron, gold, diamond blocks |
+| 玻璃 | 0.05 | 0.0 | 0.0 | glass |
+| 发光 | 0.20-0.60 | 0.0-0.6 | 0.05-0.2 | glowstone, redstone_block |
 
 ---
 
-## 💡 提示
+## 📝 技术参考
 
-> 如果光影中 PBR 效果不明显，请检查：
-> 1. 光影是否支持 labPBR 格式
-> 2. 资源包是否在光影之上（设置中调整顺序）
-> 3. `_n.png` 和 `_s.png` 文件名是否与基础贴图完全一致
+- **零雾构想 (ZeroPBR)** by 零雾05_Fogg05 — 原版 PBR 材质设计理念
+- **LabPBR 1.3** — Java 版 PBR 材质标准
+- **NVIDIA Minecraft RTX PBR Guide** — 基岩版 RTX PBR 规范
+- **Cook-Torrance BRDF** — 基于物理的反射模型
+- **GGX/Trowbridge-Reitz NDF** — 微面元法线分布
+
+---
+
+## 📄 许可
+
+本项目遵循 MIT License 开源协议。  
+材质包设计理念学习自零雾老师的作品，本项目为独立创作。
+
+---
+
+**灵动:视效** — 让 MC 的每一块方块，都拥有真实的灵魂 ✨

@@ -1,0 +1,80 @@
+{
+  "resource_pack_name": "灵动:视效",
+  "texture_name": "atlas.terrain",
+  "padding": 0,
+  "num_mip_levels": 4,
+  "texture_data": {
+    "stone": {
+      "textures": "textures/blocks/stone"
+    },
+    "dirt": {
+      "textures": "textures/blocks/dirt"
+    },
+    "grass_block_top": {
+      "textures": "textures/blocks/grass_block_top"
+    },
+    "grass_block_side": {
+      "textures": "textures/blocks/grass_block_side"
+    },
+    "grass_block_side_overlay": {
+      "textures": "textures/blocks/grass_block_side_overlay"
+    },
+    "cobblestone": {
+      "textures": "textures/blocks/cobblestone"
+    },
+    "oak_planks": {
+      "textures": "textures/blocks/oak_planks"
+    },
+    "oak_log": {
+      "textures": "textures/blocks/oak_log"
+    },
+    "oak_log_top": {
+      "textures": "textures/blocks/oak_log_top"
+    },
+    "sand": {
+      "textures": "textures/blocks/sand"
+    },
+    "gravel": {
+      "textures": "textures/blocks/gravel"
+    },
+    "glass": {
+      "textures": "textures/blocks/glass"
+    },
+    "bricks": {
+      "textures": "textures/blocks/bricks"
+    },
+    "stone_bricks": {
+      "textures": "textures/blocks/stone_bricks"
+    },
+    "mossy_cobblestone": {
+      "textures": "textures/blocks/mossy_cobblestone"
+    },
+    "obsidian": {
+      "textures": "textures/blocks/obsidian"
+    },
+    "diamond_block": {
+      "textures": "textures/blocks/diamond_block"
+    },
+    "gold_block": {
+      "textures": "textures/blocks/gold_block"
+    },
+    "iron_block": {
+      "textures": "textures/blocks/iron_block"
+    },
+    "emerald_block": {
+      "textures": "textures/blocks/emerald_block"
+    },
+    "netherrack": {
+      "textures": "textures/blocks/netherrack"
+    },
+    "soul_sand": {
+      "textures": "textures/blocks/soul_sand"
+    },
+    "glowstone": {
+      "textures": "textures/blocks/glowstone"
+    },
+    "redstone_block": {
+      "textures": "textures/blocks/redstone_block"
+    }
+  }
+}

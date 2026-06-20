@@ -1,0 +1,33 @@
+{
+  "format_version": 2,
+  "header": {
+    "description": "灵动:视效 - 原版风格PBR材质包\n1111张方块贴图完整覆盖\n学习零雾老师设计理念",
+    "name": "灵动:视效",
+    "uuid": "c8f9e0d1-3456-5cde-9ef0-234567890abc",
+    "version": [1, 21, 0],
+    "min_engine_version": [1, 20, 0]
+  },
+  "modules": [
+    {
+      "type": "resources",
+      "uuid": "d9f0e1d2-4567-6def-0ef1-345678901bcd",
+      "version": [1, 21, 0]
+    }
+  ],
+  "capabilities": {
+    "raytraced": true,
+    "pbr": true
+  },
+  "subpacks": [
+    {
+      "folder_name": "subpacks/64x",
+      "name": "§a64x §7标清",
+      "memory_tier": 1
+    },
+    {
+      "folder_name": "subpacks/128x",
+      "name": "§b128x §7高清",
+      "memory_tier": 2
+    }
+  ]
+}
