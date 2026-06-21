@@ -1,4 +1,4 @@
-// 灵动:视效 - final vertex (全屏三角形)
+// 灵动:视效 - final vertex (全屏)
 #version 150
 
 out vec2 texCoord;
