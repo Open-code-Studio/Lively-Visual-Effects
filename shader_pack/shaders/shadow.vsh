@@ -1,4 +1,4 @@
-// 灵动:视效 - shadow vertex (Iris modern)
+// 灵动:视效 - shadow vertex (Iris Core Profile)
 #version 150
 
 in vec3 vaPosition;

@@ -1,4 +1,4 @@
-// 灵动:视效 - water vertex (Iris modern)
+// 灵动:视效 - water vertex (Iris Core Profile)
 #version 150
 
 in vec3 vaPosition;
@@ -6,8 +6,8 @@ in vec4 vaColor;
 in vec2 vaUV0;
 
 uniform mat4 gbufferModelView;
-uniform mat4 gbufferModelViewInverse;
 uniform mat4 gbufferProjection;
+uniform mat4 gbufferModelViewInverse;
 
 out vec2 texCoord;
 out vec3 worldPos;
