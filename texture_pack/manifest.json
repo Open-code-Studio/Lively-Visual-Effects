@@ -1,8 +1,8 @@
 {
   "format_version": 2,
   "header": {
-    "description": "灵动:视效 - 原版风格PBR材质包\n1111张方块贴图完整覆盖\n学习零雾老师设计理念",
-    "name": "灵动:视效",
+    "description": "LVE-灵动视效 - 原版风格PBR材质包\n1111张方块贴图完整覆盖\n学习零雾老师设计理念",
+    "name": "LVE-灵动视效",
     "uuid": "c8f9e0d1-3456-5cde-9ef0-234567890abc",
     "version": [1, 21, 0],
     "min_engine_version": [1, 20, 0]
