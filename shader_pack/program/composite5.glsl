@@ -34,7 +34,7 @@ void LinearToRGB(inout vec3 color) {
 }
 
 void DoCompTonemap(inout vec3 color) {
-    // Lottes tonemap modified for Complementary Shaders
+    // Lottes tonemap modified for LVE-灵动视效
     // Lottes 2016, "Advanced Techniques and Optimization of HDR Color Pipelines"
     // http://32ipi028l5q82yhj72224m8j.wpengine.netdna-cdn.com/wp-content/uploads/2016/03/GdcVdrLottes.pdf
     color = TM_EXPOSURE * color;
